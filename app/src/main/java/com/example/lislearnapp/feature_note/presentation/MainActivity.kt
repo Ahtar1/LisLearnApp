@@ -1,4 +1,4 @@
-package com.example.lislearnapp
+package com.example.lislearnapp.feature_note.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
