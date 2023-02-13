@@ -47,7 +47,7 @@ fun AddEditNoteScreen(
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = true) {
-        viewModel.eventflow.collectLatest { event ->
+        viewModel.eventFlow.collectLatest { event ->
             when(event) {
                 is AddEditNoteViewModel.UiEvent.ShowSnackbar -> {
                     scaffoldState.snackbarHostState.showSnackbar(
@@ -131,11 +131,9 @@ fun AddEditNoteScreen(
                 isHintVisible = titleState.isHintVisible,
                 singleLine = true,
                 textStyle = MaterialTheme.typography.h5,
-                modifier = Modifier
-                    .fillMaxHeight()
+                modifier = Modifier.height(50.dp)
             )
             Spacer(modifier = Modifier.height(16.dp))
-
             TransparentHintTextField(
                 text = contentState.text,
                 hint = contentState.hint,

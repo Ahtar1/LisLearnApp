@@ -18,10 +18,10 @@ import javax.inject.Inject
 @HiltViewModel
 class NotesViewModel @Inject constructor(
     private val noteUseCases: NoteUseCases
-) : ViewModel(){
+) : ViewModel() {
 
     private val _state = mutableStateOf(NoteState())
-    val state : State<NoteState> = _state
+    val state: State<NoteState> = _state
 
     private var recentlyDeletedNote: Note? = null
 
@@ -31,17 +31,15 @@ class NotesViewModel @Inject constructor(
         getNotes(NoteOrder.Date(OrderType.Descending))
     }
 
-    fun onEvent(event: NotesEvent){
-        when(event){
+    fun onEvent(event: NotesEvent) {
+        when (event) {
             is NotesEvent.Order -> {
                 if (state.value.noteOrder::class == event.noteOrder::class &&
                     state.value.noteOrder.orderType == event.noteOrder.orderType
-                ){
+                ) {
                     return
                 }
-                _state.value = state.value.copy(
-                    noteOrder = event.noteOrder
-                )
+                getNotes(event.noteOrder)
             }
             is NotesEvent.DeleteNote -> {
                 viewModelScope.launch {
@@ -49,29 +47,29 @@ class NotesViewModel @Inject constructor(
                     recentlyDeletedNote = event.note
                 }
             }
-            is NotesEvent.ToggleOrderSection -> {
-                _state.value= state.value.copy(
-                    isOrderSectionVisible = !state.value.isOrderSectionVisible
-                )
-            }
             is NotesEvent.RestoreNote -> {
                 viewModelScope.launch {
-                    noteUseCases.addNote(
-                        recentlyDeletedNote ?: return@launch
-                    )
+                    noteUseCases.addNote(recentlyDeletedNote ?: return@launch)
+                    recentlyDeletedNote = null
                 }
+            }
+            is NotesEvent.ToggleOrderSection -> {
+                _state.value = state.value.copy(
+                    isOrderSectionVisible = !state.value.isOrderSectionVisible
+                )
             }
         }
     }
 
-    private fun getNotes(noteOrder: NoteOrder){
+    private fun getNotes(noteOrder: NoteOrder) {
         getNotesJob?.cancel()
-        getNotesJob = noteUseCases.getNotes(noteOrder= noteOrder)
+        getNotesJob = noteUseCases.getNotes(noteOrder)
             .onEach { notes ->
                 _state.value = state.value.copy(
                     notes = notes,
                     noteOrder = noteOrder
-            )
-        }.launchIn(viewModelScope)
+                )
+            }
+            .launchIn(viewModelScope)
     }
 }
