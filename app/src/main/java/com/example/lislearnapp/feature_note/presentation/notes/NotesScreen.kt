@@ -19,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.example.lislearnapp.feature_note.presentation.util.Screen
 
@@ -31,6 +32,8 @@ fun NotesScreen(
     val state = viewModel.state.value
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
+
+    val context = LocalContext.current
 
     Scaffold(
         floatingActionButton = {
@@ -110,6 +113,9 @@ fun NotesScreen(
                                     viewModel.onEvent(NotesEvent.RestoreNote)
                                 }
                             }
+                        },
+                        onSpeakClick = {
+                            viewModel.textToSpeech(context = context,note.content)
                         }
                     )
                     Spacer(modifier = Modifier.height(16.dp))

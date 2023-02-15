@@ -1,5 +1,7 @@
 package com.example.lislearnapp.feature_note.presentation.notes
 
+import android.content.Context
+import android.speech.tts.TextToSpeech
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -8,11 +10,13 @@ import com.example.lislearnapp.feature_note.domain.model.Note
 import com.example.lislearnapp.feature_note.domain.use_case.NoteUseCases
 import com.example.lislearnapp.feature_note.domain.util.NoteOrder
 import com.example.lislearnapp.feature_note.domain.util.OrderType
+import com.example.lislearnapp.feature_note.presentation.add_edit_note.PlayBoxState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,6 +26,11 @@ class NotesViewModel @Inject constructor(
 
     private val _state = mutableStateOf(NoteState())
     val state: State<NoteState> = _state
+
+    private val _playBoxState= mutableStateOf(PlayBoxState())
+    val playBoxState: State<PlayBoxState> = _playBoxState
+
+    private var textToSpeech: TextToSpeech? = null
 
     private var recentlyDeletedNote: Note? = null
 
@@ -58,6 +67,32 @@ class NotesViewModel @Inject constructor(
                     isOrderSectionVisible = !state.value.isOrderSectionVisible
                 )
             }
+        }
+    }
+
+    fun textToSpeech(context: Context,content:String) {
+        _playBoxState.value = playBoxState.value.copy(
+            isButtonEnabled = false,
+        )
+        textToSpeech = TextToSpeech(
+            context
+        ) {
+
+            if (it == TextToSpeech.SUCCESS) {
+                textToSpeech?.let { txtToSpeech ->
+                    txtToSpeech.language = Locale.US
+                    txtToSpeech.setSpeechRate(1.0f)
+                    txtToSpeech.speak(
+                        content,
+                        TextToSpeech.QUEUE_FLUSH,
+                        null,
+                        null
+                    )
+                }
+            }
+            _playBoxState.value = playBoxState.value.copy(
+                isButtonEnabled = true
+            )
         }
     }
 
