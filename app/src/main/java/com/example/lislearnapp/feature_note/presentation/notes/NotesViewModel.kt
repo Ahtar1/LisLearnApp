@@ -70,7 +70,7 @@ class NotesViewModel @Inject constructor(
         }
     }
 
-    fun textToSpeech(context: Context,content:String) {
+    fun textToSpeech(context: Context,content:String, language: String) {
         _playBoxState.value = playBoxState.value.copy(
             isButtonEnabled = false,
         )
@@ -78,9 +78,17 @@ class NotesViewModel @Inject constructor(
             context
         ) {
 
+            var lang= Locale.UK
+            when(language){
+                "france"-> lang= Locale.FRANCE
+                "gb"-> lang= Locale.UK
+                "germany"-> lang= Locale.GERMANY
+                "italy"-> lang= Locale.ITALY
+                "china"-> lang= Locale.CHINA
+            }
             if (it == TextToSpeech.SUCCESS) {
                 textToSpeech?.let { txtToSpeech ->
-                    txtToSpeech.language = Locale.US
+                    txtToSpeech.language = lang
                     txtToSpeech.setSpeechRate(1.0f)
                     txtToSpeech.speak(
                         content,
@@ -90,6 +98,7 @@ class NotesViewModel @Inject constructor(
                     )
                 }
             }
+
             _playBoxState.value = playBoxState.value.copy(
                 isButtonEnabled = true
             )

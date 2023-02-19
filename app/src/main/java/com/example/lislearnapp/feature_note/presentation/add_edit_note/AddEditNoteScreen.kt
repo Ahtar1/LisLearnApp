@@ -2,6 +2,7 @@ package com.example.lislearnapp.feature_note.presentation.add_edit_note
 
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -21,11 +22,13 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.lislearnapp.R
 import com.example.lislearnapp.feature_note.domain.model.Note
 import com.example.lislearnapp.feature_note.presentation.add_edit_note.components.TransparentHintTextField
 import kotlinx.coroutines.flow.collectLatest
@@ -80,7 +83,7 @@ fun AddEditNoteScreen(
             }
         },
         scaffoldState = scaffoldState
-    ) {
+    ) { it ->
         it.calculateBottomPadding()
 
         Column(
@@ -125,6 +128,80 @@ fun AddEditNoteScreen(
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ){
+
+                Note.languages.forEach {
+
+                    when(it){
+
+                        "france" -> Image(painterResource(R.drawable.france),"flag", modifier = Modifier.size(50.dp)
+                            .border(
+                                width = 3.dp,
+                                color = if (viewModel.noteLanguage.value == it) {
+                                    Color.Black
+                                } else Color.Transparent,
+                                shape = CircleShape
+                            )
+                            .clickable {
+                                viewModel.onEvent(AddEditNoteEvent.ChangeLanguage(it))
+                            })
+                        "gb" -> Image(painterResource(R.drawable.gb),"flag", modifier = Modifier.size(50.dp)
+                            .border(
+                                width = 3.dp,
+                                color = if (viewModel.noteLanguage.value == it) {
+                                    Color.Black
+                                } else Color.Transparent,
+                                shape = CircleShape
+                            )
+                            .clickable {
+                                viewModel.onEvent(AddEditNoteEvent.ChangeLanguage(it))
+                            })
+                        "germany" -> Image(painterResource(R.drawable.germany),"flag", Modifier.size(50.dp)
+                            .border(
+                                width = 3.dp,
+                                color = if (viewModel.noteLanguage.value == it) {
+                                    Color.Black
+                                } else Color.Transparent,
+                                shape = CircleShape
+                            )
+                            .clickable {
+                                viewModel.onEvent(AddEditNoteEvent.ChangeLanguage(it))
+                            })
+                        "italy" -> Image(painterResource(R.drawable.italy),"flag", modifier = Modifier.size(50.dp)
+                            .border(
+                                width = 3.dp,
+                                color = if (viewModel.noteLanguage.value == it) {
+                                    Color.Black
+                                } else Color.Transparent,
+                                shape = CircleShape
+                            )
+                            .clickable {
+                                viewModel.onEvent(AddEditNoteEvent.ChangeLanguage(it))
+                            })
+                        "china" -> Image(painterResource(R.drawable.china),"flag", modifier = Modifier.size(50.dp)
+                            .border(
+                                width = 3.dp,
+                                color = if (viewModel.noteLanguage.value == it) {
+                                    Color.Black
+                                } else Color.Transparent,
+                                shape = CircleShape
+                            )
+                            .clickable {
+                                viewModel.onEvent(AddEditNoteEvent.ChangeLanguage(it))
+                            })
+                    }
+
+
+                }
+            }
+
+
 
             Row(
                 modifier = Modifier

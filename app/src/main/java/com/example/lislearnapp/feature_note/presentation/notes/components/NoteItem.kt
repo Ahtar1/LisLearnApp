@@ -1,6 +1,7 @@
 package com.example.lislearnapp.feature_note.presentation.notes.components
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -18,11 +19,14 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.clipPath
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.ColorUtils
+import com.example.lislearnapp.R
 import com.example.lislearnapp.feature_note.domain.model.Note
+import com.example.lislearnapp.feature_note.presentation.add_edit_note.AddEditNoteEvent
 
 @Composable
 fun NoteItem(
@@ -80,6 +84,35 @@ fun NoteItem(
                 .align(Alignment.BottomEnd),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
+            when(note.language){
+                "gb" -> {
+                    Image(
+                        painterResource(R.drawable.gb),"flag", modifier = Modifier.size(50.dp)
+                    )
+                }
+                "germany" -> {
+                    Image(
+                        painterResource(R.drawable.germany),"flag", modifier = Modifier.size(50.dp)
+                    )
+                }
+                "france" -> {
+                    Image(
+                        painterResource(R.drawable.france),"flag", modifier = Modifier.size(50.dp)
+                    )
+                }
+                "italy" -> {
+                    Image(
+                        painterResource(R.drawable.italy),"flag", modifier = Modifier.size(50.dp)
+                    )
+                }
+                "china" -> {
+                    Image(
+                        painterResource(R.drawable.china),"flag", modifier = Modifier.size(50.dp)
+                    )
+                }
+            }
+
+
             IconButton(
                 onClick = onSpeakClick,
             ) {

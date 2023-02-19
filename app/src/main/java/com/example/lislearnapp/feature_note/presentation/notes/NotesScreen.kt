@@ -115,7 +115,7 @@ fun NotesScreen(
                             }
                         },
                         onSpeakClick = {
-                            viewModel.textToSpeech(context = context,note.content)
+                            viewModel.textToSpeech(context = context,note.content,note.language)
                         }
                     )
                     Spacer(modifier = Modifier.height(16.dp))

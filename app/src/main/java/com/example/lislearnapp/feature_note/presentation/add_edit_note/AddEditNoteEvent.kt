@@ -10,5 +10,6 @@ sealed class AddEditNoteEvent {
     data class EnteredContent(val value: String): AddEditNoteEvent()
     data class ChangeContentFocused(val focusState: FocusState) : AddEditNoteEvent()
     data class ChangeColor(val color: Int): AddEditNoteEvent()
+    data class ChangeLanguage(val language: String): AddEditNoteEvent()
     object SaveNote : AddEditNoteEvent()
 }

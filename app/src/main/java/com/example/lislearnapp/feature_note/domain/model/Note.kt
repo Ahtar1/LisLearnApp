@@ -10,12 +10,14 @@ data class Note(
     val content: String,
     val timestamp: Long,
     val color: Int,
+    val language: String,
     @PrimaryKey val id: Int? = null
 ) {
     companion object {
-        val noteColors = listOf(RedOrange, LightGreen, Violet, BabyBlue, RedPink
-        )
+        val noteColors = listOf(RedOrange, LightGreen, Violet, BabyBlue, RedPink)
+        val languages = listOf("gb","germany","france","italy","china")
     }
+
 }
 
 class InvalidNoteException(message: String): Exception(message)

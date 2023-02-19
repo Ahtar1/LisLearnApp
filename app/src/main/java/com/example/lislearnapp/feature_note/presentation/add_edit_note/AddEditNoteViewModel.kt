@@ -46,6 +46,9 @@ class AddEditNoteViewModel @Inject constructor(
     private val _noteColor = mutableStateOf(Note.noteColors.random().toArgb())
     val noteColor: State<Int> = _noteColor
 
+    private val _noteLanguage = mutableStateOf("gb")
+    val noteLanguage: State<String> = _noteLanguage
+
     private val _playBoxState = mutableStateOf(PlayBoxState())
     val playBoxState: State<PlayBoxState> = _playBoxState
 
@@ -113,6 +116,7 @@ class AddEditNoteViewModel @Inject constructor(
                                 content = noteContent.value.text,
                                 timestamp = System.currentTimeMillis(),
                                 color = noteColor.value,
+                                language= noteLanguage.value,
                                 id = currentNoteId
                             )
                         )
@@ -126,6 +130,9 @@ class AddEditNoteViewModel @Inject constructor(
                     }
                 }
             }
+            is AddEditNoteEvent.ChangeLanguage -> {
+                _noteLanguage.value = event.language
+            }
         }
     }
 
@@ -136,19 +143,27 @@ class AddEditNoteViewModel @Inject constructor(
         textToSpeech = TextToSpeech(
             context
         ) {
+            var lang= Locale.UK
+            when(noteLanguage.value){
+                "france"-> lang= Locale.FRANCE
+                "gb"-> lang= Locale.UK
+                "germany"-> lang= Locale.GERMANY
+                "italy"-> lang= Locale.ITALY
+                "china"-> lang= Locale.CHINA
+            }
 
-                if (it == TextToSpeech.SUCCESS) {
-                    textToSpeech?.let { txtToSpeech ->
-                        txtToSpeech.language = Locale.US
-                        txtToSpeech.setSpeechRate(1.0f)
-                        txtToSpeech.speak(
-                            _noteContent.value.text,
-                            TextToSpeech.QUEUE_FLUSH,
-                            null,
-                            null
-                        )
-                    }
+            if (it == TextToSpeech.SUCCESS) {
+                textToSpeech?.let { txtToSpeech ->
+                    txtToSpeech.language = lang
+                    txtToSpeech.setSpeechRate(1.0f)
+                    txtToSpeech.speak(
+                        _noteContent.value.text,
+                        TextToSpeech.QUEUE_FLUSH,
+                        null,
+                        null
+                    )
                 }
+            }
             _playBoxState.value = playBoxState.value.copy(
                 isButtonEnabled = true
             )
