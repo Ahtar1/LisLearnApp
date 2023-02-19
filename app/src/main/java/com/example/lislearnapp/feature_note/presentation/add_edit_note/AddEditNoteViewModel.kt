@@ -74,6 +74,7 @@ class AddEditNoteViewModel @Inject constructor(
                             isHintVisible = false
                         )
                         _noteColor.value = note.color
+                        _noteLanguage.value = note.language
                     }
                 }
             }
