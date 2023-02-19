@@ -184,17 +184,7 @@ fun AddEditNoteScreen(
                             .clickable {
                                 viewModel.onEvent(AddEditNoteEvent.ChangeLanguage(it))
                             })
-                        "china" -> Image(painterResource(R.drawable.china),"flag", modifier = Modifier.size(50.dp)
-                            .border(
-                                width = 3.dp,
-                                color = if (viewModel.noteLanguage.value == it) {
-                                    Color.Black
-                                } else Color.Transparent,
-                                shape = CircleShape
-                            )
-                            .clickable {
-                                viewModel.onEvent(AddEditNoteEvent.ChangeLanguage(it))
-                            })
+
                     }
 
 

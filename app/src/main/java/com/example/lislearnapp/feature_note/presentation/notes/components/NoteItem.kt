@@ -105,11 +105,6 @@ fun NoteItem(
                         painterResource(R.drawable.italy),"flag", modifier = Modifier.size(50.dp)
                     )
                 }
-                "china" -> {
-                    Image(
-                        painterResource(R.drawable.china),"flag", modifier = Modifier.size(50.dp)
-                    )
-                }
             }
 
 

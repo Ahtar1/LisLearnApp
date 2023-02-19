@@ -15,7 +15,7 @@ data class Note(
 ) {
     companion object {
         val noteColors = listOf(RedOrange, LightGreen, Violet, BabyBlue, RedPink)
-        val languages = listOf("gb","germany","france","italy","china")
+        val languages = listOf("gb","germany","france","italy")
     }
 
 }

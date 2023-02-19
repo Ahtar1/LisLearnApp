@@ -149,7 +149,6 @@ class AddEditNoteViewModel @Inject constructor(
                 "gb"-> lang= Locale.UK
                 "germany"-> lang= Locale.GERMANY
                 "italy"-> lang= Locale.ITALY
-                "china"-> lang= Locale.CHINA
             }
 
             if (it == TextToSpeech.SUCCESS) {
