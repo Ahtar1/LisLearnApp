@@ -1,5 +1,6 @@
 package com.example.lislearnapp.feature_note.domain.use_case
 
+import androidx.compose.ui.window.isPopupLayout
 import com.example.lislearnapp.feature_note.domain.model.Note
 import com.example.lislearnapp.feature_note.domain.repository.NoteRepository
 import com.example.lislearnapp.feature_note.domain.util.NoteOrder
@@ -19,14 +20,17 @@ class GetNotes(private val repository: NoteRepository) {
                     when(noteOrder){
                         is NoteOrder.Date -> notes.sortedBy { it.timestamp }
                         is NoteOrder.Color -> notes.sortedBy { it.color }
-                        is NoteOrder.Title -> notes.sortedBy { it.title.lowercase() }
+                        is NoteOrder.Title -> notes.sortedBy { it.title.lowercase()}
+                        is NoteOrder.Language -> notes.sortedBy { it.language.lowercase()
+                        }
                     }
                 }
                 is OrderType.Descending -> {
                     when(noteOrder){
                         is NoteOrder.Date -> notes.sortedByDescending { it.timestamp }
                         is NoteOrder.Color -> notes.sortedByDescending { it.color }
-                        is NoteOrder.Title -> notes.sortedByDescending { it.title.lowercase() }
+                        is NoteOrder.Title -> notes.sortedByDescending { it.title.lowercase()}
+                        is NoteOrder.Language -> notes.sortedByDescending { it.language.lowercase()}
                     }
                 }
             }
